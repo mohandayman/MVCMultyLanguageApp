@@ -1,0 +1,48 @@
+﻿@model ITSpark_Task.Student
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-primary">@ViewBag.Details</h1>
+
+
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="/css/Images/student.jpg" >
+    <div>
+        <h4>@ViewBag.Student</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-5 ms-2">
+               @ViewBag.Name
+            </dt>
+            <dd class="col-5 ">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-5 ms-2">
+               @ViewBag.Gender
+            </dt>
+            <dd class="col-5">
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
+            <dt class="col-5 ms-2">
+               @ViewBag.City
+            </dt>
+            <dd class="col-5">
+                @Html.DisplayFor(model => model.City)
+            </dd>
+            <dt class="col-5 ms-2">
+             @ViewBag.BirthDate
+            </dt>
+            <dd class="col-5">
+                @Html.DisplayFor(model => model.BirthDate)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Id">@ViewBag.Edit</a> |
+        <a asp-action="Index" class="btn btn-primary">@ViewBag.BacktoList</a>
+    </div>
+</div>
+

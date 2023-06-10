@@ -1,0 +1,159 @@
+﻿@using ITSpark_Task.Services;
+
+@inject LanguageService _localization;
+
+@using ITSpark_Task.Models.BussinessLayer.HelperClasses;
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+@model Student
+
+
+@ViewBag.WelcomeMassege
+
+
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-primary">
+    @ViewBag.StudentsDashBoard
+
+</h1>
+
+
+<hr />
+
+
+<div class="row">
+    <div class="col-md-6 m-auto ">
+        <form asp-action="Create">
+            <div class="form-group">
+
+                <label asp-for="Name" class="control-label ">@ViewBag.Name</label>
+
+
+                <input asp-for="Name" class="form-control" placeholder=" @ViewBag.StudentName" />
+
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label">  @ViewBag.Gender</label>
+                <select class="form-control" asp-for="Gender">
+                    <option value="Male">
+                        @ViewBag.Male
+                    </option>
+                    <option value="Female">
+                        @ViewBag.Female
+                    </option>
+                    <option value="@(new string[]{"Male" , "Female"})">
+                        @ViewBag.ALL
+                    </option>
+                </select>
+                <span asp-validation-for="Gender"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label">
+                    @ViewBag.City
+                </label>
+                <select class="form-control" asp-for="City">
+                    @foreach (var City in Enum.GetValues(typeof(Cities)))
+                    {
+                        <option value="@City">@City</option>
+                    }
+                    <option value="@Enum.GetValues(typeof(Cities))">
+                        @ViewBag.ALL
+                    </option>
+
+                </select>
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDate" class="control-label">
+                    @ViewBag.BirthDate
+                </label>
+                <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center ">
+                <a asp-action="Search" class="btn btn-primary m-4 col-4 ">
+                    @ViewBag.Search
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<p>
+    <a class=" btn btn-primary" asp-action="Create">
+        @ViewBag.CreateNew
+    </a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @ViewBag.Name
+            </th>
+            <th>
+                @ViewBag.Gender
+            </th>
+            <th>
+                @ViewBag.City
+            </th>
+            <th>
+                @ViewBag.BirthDate
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.StudentList as List<Student>)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-danger " asp-route-id="@item.Id">
+                        @ViewBag.Edit
+                    </a> |
+                    <a asp-action="Details" class="btn btn-danger" asp-route-id="@item.Id">
+                        @ViewBag.Details
+                    </a> |
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id">
+                        @ViewBag.Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+
+
+
+
+
+
+
